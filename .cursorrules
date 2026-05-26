@@ -1,0 +1,82 @@
+# AI Agent Documentation & Code Synchronization Rules
+
+You are a senior coding AI Agent. For every code change in this project, follow this process.
+
+## Step 1: Read docs before coding
+
+Before editing code or proposing an implementation:
+
+1. Check `docs/` for relevant architecture or feature documentation.
+2. Read the relevant docs:
+   - Database changes: `docs/DATABASE_SCHEMA.md`.
+   - API changes: `docs/API_SPEC.md`.
+   - UI/icon changes: `docs/FEATURE_SPEC.md` and `docs/UI_ICON_RULES.md`.
+   - Security changes: `docs/SECURITY.md`.
+   - Deployment/test changes: `docs/DEPLOYMENT.md` or `docs/TEST_PLAN.md`.
+3. Do not guess table structure, endpoints, payloads, ports, or rules before reading the official docs.
+
+## Step 2: Update docs alongside code
+
+While designing and coding:
+
+1. If tables or columns change, update `docs/DATABASE_SCHEMA.md`.
+2. If endpoints, payloads, HTTP status codes, or error codes change, update `docs/API_SPEC.md`.
+3. If UI components, colors, layout, or icons change, update `docs/FEATURE_SPEC.md` and `docs/UI_ICON_RULES.md`.
+4. If troubleshooting scenarios, test cases, or recovery flows change, update `docs/TEST_PLAN.md` or `docs/TROUBLESHOOTING_SCENARIOS.md`.
+5. Mark doc changes with `[NEW]`, `[MODIFY]`, or `[DELETE]` when useful.
+
+## Step 3: Final synchronization
+
+After code changes:
+
+1. Cross-check code against docs to avoid stale documentation.
+2. Run appropriate verification commands, at minimum `npm run build` and `npm run smoke` when core flows change.
+3. In the final response, report:
+   - Docs read.
+   - Docs updated.
+   - Verification commands run.
+   - Anything that could not be completed.
+
+## [NEW] Step 4: Use CodeGraph, React Doctor, and matching skills
+
+When changing code or fixing issues, use the right tool instead of guessing.
+
+### CodeGraph MCP
+
+Use CodeGraph for structural code questions:
+
+- Finding symbols, functions, or components.
+- Inspecting callers/callees.
+- Tracing flow from API to UI.
+- Checking impact before changing a module.
+
+Do not grep first when searching for a symbol by name. If CodeGraph is not initialized, ask the user before running initialization.
+
+### React Doctor
+
+After changing React components, UI, CSS, or frontend flows, run:
+
+```bash
+npx react-doctor@latest --verbose --diff
+```
+
+For a full frontend scan, run:
+
+```bash
+npx react-doctor@latest --verbose
+```
+
+If the score regresses or serious issues are reported, fix them before handoff. If React Doctor cannot run because the environment lacks git/base branch/tooling, report that clearly in the final response.
+
+### Matching skills
+
+Use the correct skill for the task:
+
+- `react-doctor`: React/frontend quality checks.
+- `diagnose`: runtime bugs and hard failures.
+- `tdd`: test-first or red-green-refactor work.
+- `grill-with-docs`: architecture discussion, terminology, and docs alignment.
+- `prototype`: quick experiments.
+
+Detailed rule: `docs/AGENT_TOOLING_RULES.md`.
+
